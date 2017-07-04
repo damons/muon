@@ -374,6 +374,8 @@ source_set("native_mate") {
 
   deps = [
     "build/node",
+    "//electron/vendor/ad-block/muon:ad_block",
+    "//electron/vendor/tracking-protection/muon:tp_node_addon",
     "//third_party/WebKit/public:blink_headers",
   ]
 }
