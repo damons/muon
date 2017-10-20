@@ -174,9 +174,9 @@ void BraveJavaScriptDialogManager::RunJavaScriptDialog(
                   ShouldDisplaySuppressCheckbox(extra_data),
                   false,  // is_before_unload_dialog
                   false,  // is_reload
-                  base::BindOnce(&BraveJavaScriptDialogManager::OnDialogClosed,
-                                 base::Unretained(this), web_contents,
-                                 std::move(callback)));
+                  base::Bind(&BraveJavaScriptDialogManager::OnDialogClosed,
+                             base::Unretained(this), web_contents,
+                             base::Passed(std::move(callback))));
   if (try_catch.HasCaught()) {
     std::move(callback).Run(false, base::string16());
     LOG(ERROR) << "Uncaught exception: " << try_catch.GetStackTrace();
@@ -240,9 +240,9 @@ void BraveJavaScriptDialogManager::RunBeforeUnloadDialog(
       ShouldDisplaySuppressCheckbox(extra_data),
       true,  // is_before_unload_dialog
       is_reload,
-      base::BindOnce(&BraveJavaScriptDialogManager::OnBeforeUnloadDialogClosed,
-                     base::Unretained(this), web_contents,
-                     std::move(callback)));
+      base::Bind(&BraveJavaScriptDialogManager::OnBeforeUnloadDialogClosed,
+                 base::Unretained(this), web_contents,
+                 base::Passed(std::move(callback))));
 
   if (try_catch.HasCaught()) {
     std::move(callback).Run(true, base::string16());
